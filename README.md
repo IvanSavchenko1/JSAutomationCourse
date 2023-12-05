@@ -1,2 +1,2 @@
 # JSAutomationCourse
-JS Playwrite automation course
+This is a testing note for readme file in JS Playwrite automation course
