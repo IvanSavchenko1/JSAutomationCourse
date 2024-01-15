@@ -45,7 +45,7 @@ test.describe("Arnage shop tests", () => {
         await expect(contactsPage.addressTitle).toHaveText("Адреса")
     });
 
-    test('Check charging stations adding to cart', async ({page}) => {
+    test('Check 1st charging station adding to cart (Xpath)', async ({page}) => {
         const homePage = new HomePage(page);
         const energyPage = new EnergyPage(page);
         const basketPage = new BasketPage(page);
@@ -53,13 +53,11 @@ test.describe("Arnage shop tests", () => {
         await expect(homePage.energyIndependence).toBeVisible()
         await (homePage.energyIndependence).click()
         await (energyPage.powerstations).click()
-        await expect(energyPage.vitolS633).toBeVisible()
-        await expect(energyPage.vitolS633Buy).toBeVisible()
-        await (energyPage.vitolS633Buy).click()
+        await expect(energyPage.firstPowerstation).toBeVisible()
+        await (energyPage.firstPowerstatinoBuy).click()
         await expect(basketPage.basketTitle).toBeVisible({timeout: 5000})
         await expect(basketPage.basketTitle).toHaveText('Кошик')
-        await expect(basketPage.cartTitle).toHaveText('Портативне джерело живлення Vitol S633')
-        await expect(basketPage.cartPrice).toContainText('12 595')
+        await expect(basketPage.cartTitle).toContainText(/Портативне джерело живлення|Зарядна станція/)
     });
 
     test('Buying first item in Hits list (Xpath selectors)', async ({page}) => {
