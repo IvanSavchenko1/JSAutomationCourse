@@ -20,7 +20,14 @@ export class HomePage {
     readonly buyFastInputNumber: Locator;
     readonly submitOrder: Locator;
     readonly OrderSubmittedHeader: Locator;
-
+    readonly catalogOnTop: Locator;
+    readonly feedbackOnTop: Locator;
+    readonly callMe: Locator;
+    readonly callMeHeader: Locator;
+    readonly callMeNameInput: Locator;
+    readonly callMePhoneInput: Locator;
+    readonly callMeSubmitButton: Locator;
+    readonly callMeThanksTitle: Locator;
 
 
     constructor(page: Page) {
@@ -43,11 +50,24 @@ export class HomePage {
         this.buyFastInputNumber = page.locator('//input[@name="ProductQuick[delivery_phone]"]')
         this.submitOrder = page.locator('//input[@value="Оформити замовлення"]');
         this.OrderSubmittedHeader = page.locator('//*[@class="main-h"]');
+        this.catalogOnTop = page.locator('//*[@class=\'site-menu__item\'][1] //*[contains(text(),"Каталог")]')
+        this.feedbackOnTop = page.locator('//*[@class=\'site-menu__item\'] //*[contains(text(),"Відгуки")]')
+        this.callMe = page.locator('.phones__callback-link')
+        this.callMeHeader = page.locator('#call-me .popup-header>.popup-title')
+        this.callMeNameInput = page.locator('[name="form[title]"]')
+        this.callMePhoneInput = page.locator('[name="form[phone]"]')
+        this.callMeSubmitButton = page.locator('//*[@type=\'submit\'] [@value=\'Надіслати\']')
+        this.callMeThanksTitle = page.locator('[class="popup-body j-text"]')
     }
 
     async buyFastSubmit (name: string, phone: string) {
         await this.buyFastInputName.fill(name);
         await this.buyFastInputNumber.fill(phone);
         await this.submitOrder.click();
+    }
+    async callMeBack (name: string, phone: string) {
+        await this.callMeNameInput.fill(name);
+        await this.callMePhoneInput.fill(phone)
+        await this.callMeSubmitButton.click()
     }
 }
