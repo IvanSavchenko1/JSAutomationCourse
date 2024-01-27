@@ -1,9 +1,10 @@
 import { test, expect } from '@playwright/test';
 import {HomePage} from "../page-objects/homePage";
-import {ContactsPage} from "../page-objects/contactsPage"
+import {ContactsPage} from "../page-objects/contactsPage";
 import {EnergyPage} from "../page-objects/energyPage";
-import {BasketPage} from "../page-objects/basketPage"
-
+import {BasketPage} from "../page-objects/basketPage";
+import {CatalogPage} from "../page-objects/catalogPage";
+import {FeedbackPage} from "../page-objects/feedbackPage";
 
 
 test.describe("Arnage shop tests", () => {
@@ -70,5 +71,33 @@ test.describe("Arnage shop tests", () => {
         await expect(homePage.buyFastHeader).toBeVisible()
         await homePage.buyFastSubmit('[Test]','111111111')
         await expect(homePage.OrderSubmittedHeader).toHaveText('Ваше замовлення отримано', {timeout: 5000})
+    });
+
+    test('Check if all elements in catalog have brand Alpine', async ({page}) => {
+        const homePage = new HomePage(page);
+        const catalogPage = new CatalogPage(page);
+
+        await (homePage.catalogOnTop).click()
+        await (catalogPage.alpineSelector).click()
+        await catalogPage.checkBrandTitles('Alpine')
+    });
+
+    test('Add feedback for shop and check if it`s displayed', async ({page}) => {
+        const homePage = new HomePage(page);
+        const feedbackPage = new FeedbackPage(page)
+
+        await (homePage.feedbackOnTop).click()
+        await expect(feedbackPage.mainHeader).toHaveText('Відгуки про інтернет - магазин Арнаж')
+        await (feedbackPage.feedbackButton).click()
+        await feedbackPage.submitAndCheckFeedback('[Test]',  '[good shop]')
+    });
+
+    test('Call user', async ({page}) => {
+        const homePage = new HomePage(page);
+
+        await (homePage.callMe).click()
+        await expect (homePage.callMeHeader).toHaveText('Передзвонити вам?')
+        await homePage.callMeBack('[Test]', '123456789')
+        await expect (homePage.callMeThanksTitle).toHaveText('Дякуємо за запит. Ми зателефонуємо вам найближчим часом.')
     });
 });
