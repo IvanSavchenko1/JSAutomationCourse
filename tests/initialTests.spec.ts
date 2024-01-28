@@ -33,7 +33,7 @@ test.describe("Arnage shop tests", () => {
         const homePage = new HomePage(page);
 
         await expect(homePage.myBasketTitle).toHaveText('Мій кошик')
-        await expect(homePage.myBasket).toHaveAttribute('class','basket is-empty')
+        await expect(homePage.myBasket).toHaveAttribute('class', 'basket is-empty')
         await expect(homePage.myBasketContents).not.toHaveAttribute('class', 'basket__value')
     });
 
@@ -69,7 +69,7 @@ test.describe("Arnage shop tests", () => {
         await (homePage.firstItemSalesHits).click()
         await (homePage.buyFast).click()
         await expect(homePage.buyFastHeader).toBeVisible()
-        await homePage.buyFastSubmit('[Test]','111111111')
+        await homePage.buyFastSubmit('[Test]', '111111111')
         await expect(homePage.OrderSubmittedHeader).toHaveText('Ваше замовлення отримано', {timeout: 5000})
     });
 
@@ -89,15 +89,52 @@ test.describe("Arnage shop tests", () => {
         await (homePage.feedbackOnTop).click()
         await expect(feedbackPage.mainHeader).toHaveText('Відгуки про інтернет - магазин Арнаж')
         await (feedbackPage.feedbackButton).click()
-        await feedbackPage.submitAndCheckFeedback('[Test]',  '[good shop]')
+        await feedbackPage.submitAndCheckFeedback('[Test]', '[good shop]')
     });
 
     test('Call user', async ({page}) => {
         const homePage = new HomePage(page);
 
         await (homePage.callMe).click()
-        await expect (homePage.callMeHeader).toHaveText('Передзвонити вам?')
+        await expect(homePage.callMeHeader).toHaveText('Передзвонити вам?')
         await homePage.callMeBack('[Test]', '123456789')
-        await expect (homePage.callMeThanksTitle).toHaveText('Дякуємо за запит. Ми зателефонуємо вам найближчим часом.')
+        await expect(homePage.callMeThanksTitle).toHaveText('Дякуємо за запит. Ми зателефонуємо вам найближчим часом.')
     });
-});
+
+    test('We in social networks - check Instagram opening', async ({page, context}) => {
+        const homePage = new HomePage(page);
+
+        await expect(homePage.footerWeInSocialMedia).toHaveText('Ми в соцмережах')
+        const pagePromise = context.waitForEvent('page');
+        await (homePage.weInInsta).click()
+        const newPage = await pagePromise;
+        await newPage.waitForLoadState();
+
+        await expect(newPage).toHaveURL('https://www.instagram.com/arnage.com.ua/')
+    });
+
+    test('Buy second item on sale', async ({page}) => {
+        const homePage = new HomePage(page);
+        const basketPage = new BasketPage(page);
+
+        await (homePage.sale).click()
+        await page.waitForTimeout(2000)
+        await expect(homePage.saleActive).toBeEnabled()
+        await expect(homePage.secondElementOnSale).toBeVisible()
+        await (homePage.secondElementOnSale).click()
+        await expect(basketPage.basketTitle).toBeVisible({timeout: 5000})
+        await expect(basketPage.submitOrderButton).toBeEnabled()
+    });
+
+    test('Search Focal brand and check titles', async ({page}) => {
+        const homePage = new HomePage(page);
+        const catalogPage = new CatalogPage(page);
+
+        let searchItem: string = "Focal"
+        await (homePage.searchInput).fill(searchItem)
+        await expect(page.getByText('Всі результати пошуку')).toBeVisible({timeout: 8000})
+        await page.getByText('Всі результати пошуку').click()
+        await expect(catalogPage.catalogSearchHeader).toContainText(searchItem)
+        await catalogPage.checkBrandTitles(searchItem)
+    });
+})
