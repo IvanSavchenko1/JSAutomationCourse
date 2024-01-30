@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "description": "This is a testing note for readme file in JS Playwrite automation course",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "api-tests": "npx playwright test apiTests.spec.ts",
+    "ui-tests": "npx playwright test initialTests.spec.ts"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
