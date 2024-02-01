@@ -5,11 +5,13 @@ export class BasketPage {
     readonly basketTitle: Locator;
     readonly cartTitle: Locator;
     readonly cartPrice: Locator;
+    readonly submitOrderButton: Locator;
 
     constructor(page: Page) {
         this.page = page;
         this.basketTitle = page.locator('.overlay>.popup .popup-title');
         this.cartTitle = page.locator('.cart-title');
         this.cartPrice = page.locator('.cart-price')
+        this.submitOrderButton = page.locator('.cart-btnOrder')
     }
 }

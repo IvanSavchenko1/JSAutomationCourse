@@ -28,7 +28,12 @@ export class HomePage {
     readonly callMePhoneInput: Locator;
     readonly callMeSubmitButton: Locator;
     readonly callMeThanksTitle: Locator;
-
+    readonly footerWeInSocialMedia: Locator;
+    readonly weInInsta: Locator;
+    readonly sale: Locator;
+    readonly saleActive: Locator;
+    readonly secondElementOnSale: Locator;
+    readonly searchInput: Locator;
 
     constructor(page: Page) {
         this.page = page;
@@ -58,6 +63,12 @@ export class HomePage {
         this.callMePhoneInput = page.locator('[name="form[phone]"]')
         this.callMeSubmitButton = page.locator('//*[@type=\'submit\'] [@value=\'Надіслати\']')
         this.callMeThanksTitle = page.locator('[class="popup-body j-text"]')
+        this.footerWeInSocialMedia = page.locator('(//*[@class=\'footer__block\']) [4]')
+        this.weInInsta = page.locator('//*[@title="Мы в инстаграмме"]')
+        this.sale = page.locator('[rel=global_action]')
+        this.saleActive = page.locator('[class=\'catalogTabs-nav-i j-special-offers-tab __active\']')
+        this.secondElementOnSale = page.locator('(//*[@data-cartproducttype="product"]) [2]')
+        this.searchInput = page.locator('.search__input')
     }
 
     async buyFastSubmit (name: string, phone: string) {
