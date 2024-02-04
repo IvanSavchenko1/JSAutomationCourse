@@ -109,6 +109,7 @@ test.describe("Arnage shop tests", () => {
         await (homePage.weInInsta).click()
         const newPage = await pagePromise;
         await newPage.waitForLoadState();
+        await page.waitForTimeout(2000)
 
         await expect(newPage).toHaveURL('https://www.instagram.com/arnage.com.ua/', { timeout: 10000 })
     });
