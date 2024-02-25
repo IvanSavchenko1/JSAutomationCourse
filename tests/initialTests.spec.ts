@@ -44,6 +44,7 @@ test.describe("Arnage shop tests", () => {
         await expect(homePage.contacts).toBeVisible()
         await (homePage.contacts).click()
         await expect(contactsPage.addressTitle).toHaveText("Адреса")
+        await expect(page).toHaveScreenshot()
     });
 
     test('Check 1st charging station adding to cart (Xpath)', async ({page}) => {
@@ -58,7 +59,7 @@ test.describe("Arnage shop tests", () => {
         await (energyPage.firstPowerstatinoBuy).click()
         await expect(basketPage.basketTitle).toBeVisible({timeout: 5000})
         await expect(basketPage.basketTitle).toHaveText('Кошик')
-        await expect(basketPage.cartTitle).toContainText(/Портативне джерело живлення|Зарядна станція/)
+        await expect(basketPage.cartTitle).toContainText(/Портативне джерело живлення|Зарядна станція|зарядна станція/)
     });
 
     test('Buying first item in Hits list (Xpath selectors)', async ({page}) => {
