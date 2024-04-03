@@ -5,6 +5,7 @@ import {EnergyPage} from "../page-objects/energyPage";
 import {BasketPage} from "../page-objects/basketPage";
 import {CatalogPage} from "../page-objects/catalogPage";
 import {FeedbackPage} from "../page-objects/feedbackPage";
+import { fixtTest } from "../fixtures/fixture"
 
 
 test.describe("Arnage shop tests", () => {
@@ -137,5 +138,16 @@ test.describe("Arnage shop tests", () => {
         await page.getByText('Всі результати пошуку').click()
         await expect(catalogPage.catalogSearchHeader).toContainText(searchItem)
         await catalogPage.checkBrandTitles(searchItem)
+    });
+})
+
+test.describe("Arnage shop tests with fixtures", async () => {
+    fixtTest('Fixture test user after login on main page', async ({page, homepage}) =>{
+        await expect(homepage.usernameLogin).toHaveText('Test Testushenko');
+        await expect(homepage.autoSound).toBeVisible();
+        await expect(homepage.autoCarAudio).toBeVisible();
+        await expect(homepage.newStuff).toBeVisible();
+        await expect(homepage.salesHits).toBeVisible();
+        await expect(homepage.allFeedbacks).toBeVisible();
     });
 })

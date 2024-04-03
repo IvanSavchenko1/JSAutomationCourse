@@ -34,6 +34,11 @@ export class HomePage {
     readonly saleActive: Locator;
     readonly secondElementOnSale: Locator;
     readonly searchInput: Locator;
+    readonly login: Locator;
+    readonly emailLoginInput: Locator;
+    readonly passLoginInput: Locator;
+    readonly loginButton: Locator;
+    readonly usernameLogin: Locator;
 
     constructor(page: Page) {
         this.page = page;
@@ -69,6 +74,12 @@ export class HomePage {
         this.saleActive = page.locator('[class=\'catalogTabs-nav-i j-special-offers-tab __active\']')
         this.secondElementOnSale = page.locator('(//*[@data-cartproducttype="product"]) [2]')
         this.searchInput = page.locator('.search__input')
+        this.login = page.locator('.userbar__button-text')
+        this.emailLoginInput = page.locator('#sign-in [class="field j-focus"]')
+        this.passLoginInput = page.locator('#login_form_id [type="password"]')
+        this.loginButton = page.locator('[value="Увійти"]')
+        this.usernameLogin = page.locator('.userbar__button-text')
+
     }
 
     async buyFastSubmit (name: string, phone: string) {
@@ -78,7 +89,18 @@ export class HomePage {
     }
     async callMeBack (name: string, phone: string) {
         await this.callMeNameInput.fill(name);
-        await this.callMePhoneInput.fill(phone)
-        await this.callMeSubmitButton.click()
+        await this.callMePhoneInput.fill(phone);
+        await this.callMeSubmitButton.click();
+    }
+
+    async navigate () {
+        await this.page.goto('https://arnage.com.ua/')
+    }
+
+    async loginFunction (email: string, password: string){
+        await this.login.click();
+        await this.emailLoginInput.fill(email);
+        await this.passLoginInput.fill(password);
+        await this.loginButton.click()
     }
 }
