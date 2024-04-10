@@ -39,6 +39,8 @@ export class HomePage {
     readonly passLoginInput: Locator;
     readonly loginButton: Locator;
     readonly usernameLogin: Locator;
+    readonly buyButton: Locator;
+
 
     constructor(page: Page) {
         this.page = page;
@@ -54,10 +56,6 @@ export class HomePage {
         this.contacts = page.locator('.site-menu__link:has-text("Контакти")');
         this.energyIndependence = page.locator('.products-menu__title-link:has-text("Енергонезалежність")');
         this.firstItemSalesHits = page.locator('//*[@class=\'catalog-carousel__wrap promo-slider-list\']/*[1]');
-        this.buyFast = page.locator('//*[@class="product-order__block"]//*[@class="btn"]');
-        this.buyFastHeader = page.locator('//div[contains(text(),"Замовити швидко")]');
-        this.buyFastInputName = page.locator('//input[@name="ProductQuick[delivery_name]"]');
-        this.buyFastInputNumber = page.locator('//input[@name="ProductQuick[delivery_phone]"]')
         this.submitOrder = page.locator('//input[@value="Оформити замовлення"]');
         this.OrderSubmittedHeader = page.locator('//*[@class="main-h"]');
         this.catalogOnTop = page.locator('//*[@class=\'site-menu__item\'][1] //*[contains(text(),"Каталог")]')
@@ -79,14 +77,9 @@ export class HomePage {
         this.passLoginInput = page.locator('#login_form_id [type="password"]')
         this.loginButton = page.locator('[value="Увійти"]')
         this.usernameLogin = page.locator('.userbar__button-text')
-
+        this.buyButton = page.locator('[class="btn __special j-buy-button-add"]')
     }
 
-    async buyFastSubmit (name: string, phone: string) {
-        await this.buyFastInputName.fill(name);
-        await this.buyFastInputNumber.fill(phone);
-        await this.submitOrder.click();
-    }
     async callMeBack (name: string, phone: string) {
         await this.callMeNameInput.fill(name);
         await this.callMePhoneInput.fill(phone);

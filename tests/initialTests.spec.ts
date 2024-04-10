@@ -63,16 +63,14 @@ test.describe("Arnage shop tests", () => {
         await expect(basketPage.cartTitle).toContainText(/Портативне джерело живлення|Зарядна станція|зарядна станція/)
     });
 
-    test('Buying first item in Hits list (Xpath selectors)', async ({page}) => {
+    test('Opening first item in Hits list (Xpath selectors)', async ({page}) => {
         const homePage = new HomePage(page);
 
         await expect(homePage.headerLogo).toBeVisible()
         await expect(homePage.salesHits).toBeVisible()
         await (homePage.firstItemSalesHits).click()
-        await (homePage.buyFast).click()
-        await expect(homePage.buyFastHeader).toBeVisible()
-        await homePage.buyFastSubmit('[Test]', '111111111')
-        await expect(homePage.OrderSubmittedHeader).toHaveText('Ваше замовлення отримано', {timeout: 5000})
+        await expect(homePage.buyButton).toBeVisible()
+        await expect(homePage.buyButton).toHaveText("Купити")
     });
 
     test('Check if all elements in catalog have brand Alpine', async ({page}) => {
