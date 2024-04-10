@@ -5,6 +5,7 @@ import {EnergyPage} from "../page-objects/energyPage";
 import {BasketPage} from "../page-objects/basketPage";
 import {CatalogPage} from "../page-objects/catalogPage";
 import {FeedbackPage} from "../page-objects/feedbackPage";
+import { fixtTest } from "../fixtures/fixture"
 
 
 test.describe("Arnage shop tests", () => {
@@ -62,16 +63,14 @@ test.describe("Arnage shop tests", () => {
         await expect(basketPage.cartTitle).toContainText(/Портативне джерело живлення|Зарядна станція|зарядна станція/)
     });
 
-    test('Buying first item in Hits list (Xpath selectors)', async ({page}) => {
+    test('Opening first item in Hits list (Xpath selectors)', async ({page}) => {
         const homePage = new HomePage(page);
 
         await expect(homePage.headerLogo).toBeVisible()
         await expect(homePage.salesHits).toBeVisible()
         await (homePage.firstItemSalesHits).click()
-        await (homePage.buyFast).click()
-        await expect(homePage.buyFastHeader).toBeVisible()
-        await homePage.buyFastSubmit('[Test]', '111111111')
-        await expect(homePage.OrderSubmittedHeader).toHaveText('Ваше замовлення отримано', {timeout: 5000})
+        await expect(homePage.buyButton).toBeVisible()
+        await expect(homePage.buyButton).toHaveText("Купити")
     });
 
     test('Check if all elements in catalog have brand Alpine', async ({page}) => {
@@ -137,5 +136,16 @@ test.describe("Arnage shop tests", () => {
         await page.getByText('Всі результати пошуку').click()
         await expect(catalogPage.catalogSearchHeader).toContainText(searchItem)
         await catalogPage.checkBrandTitles(searchItem)
+    });
+})
+
+test.describe("Arnage shop tests with fixtures", async () => {
+    fixtTest('Fixture test user after login on main page', async ({page, homepage}) =>{
+        await expect(homepage.usernameLogin).toHaveText('Test Testushenko');
+        await expect(homepage.autoSound).toBeVisible();
+        await expect(homepage.autoCarAudio).toBeVisible();
+        await expect(homepage.newStuff).toBeVisible();
+        await expect(homepage.salesHits).toBeVisible();
+        await expect(homepage.allFeedbacks).toBeVisible();
     });
 })
