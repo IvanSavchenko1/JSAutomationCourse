@@ -14,10 +14,6 @@ export class HomePage {
     readonly contacts: Locator;
     readonly energyIndependence: Locator;
     readonly firstItemSalesHits: Locator;
-    readonly buyFast: Locator;
-    readonly buyFastHeader: Locator;
-    readonly buyFastInputName: Locator;
-    readonly buyFastInputNumber: Locator;
     readonly submitOrder: Locator;
     readonly OrderSubmittedHeader: Locator;
     readonly catalogOnTop: Locator;
